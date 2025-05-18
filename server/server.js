@@ -20,6 +20,9 @@ app.use(cors({
 
 app.use("/api/auth", authRouter);
 app.use("/api/product", productRouter);
+app.get("/", (req, res) => {
+    res.json("Hello Backend")
+})
 
 connectDB()
 .then(() => {
