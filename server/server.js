@@ -13,7 +13,7 @@ const app = express();
 app.use(express.json({limit: "5mb"}));
 app.use(cookieParser());
 app.use(cors({
-  origin: "https://mern-ecommerce-frontend-silk.vercel.app",
+  origin: ["https://mern-ecommerce-frontend-silk.vercel.app", "http://localhost:3000"],
   credentials: true,
 }));
 
