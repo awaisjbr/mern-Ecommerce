@@ -11,7 +11,7 @@ const port = process.env.PORT || 5000;
 const app = express();
 
 app.use(cors({
-  origin: ["https://mern-ecommerce-frontend-lovat.vercel.app", "http://localhost:3000"],
+  origin: 'https://mern-ecommerce-frontend-lovat.vercel.app',
   credentials: true,
 }));
 app.use(express.json({limit: "5mb"}));
