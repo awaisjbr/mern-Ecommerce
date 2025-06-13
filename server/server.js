@@ -9,9 +9,10 @@ import { router as productRouter } from "./src/routes/Product.route.js";
 dotenv.config();
 const port = process.env.PORT || 5000;
 const app = express();
+const allowedOrigins = ['https://mern-ecommerce-frontend-lovat.vercel.app', 'http://localhost:3000']
 
 app.use(cors({
-  origin: 'https://mern-ecommerce-frontend-lovat.vercel.app',
+  origin: allowedOrigins,
   credentials: true,
 }));
 app.use(express.json({limit: "5mb"}));
