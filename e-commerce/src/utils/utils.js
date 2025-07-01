@@ -1,6 +1,6 @@
 import axios from "axios"
 export const axiosInstance = axios.create({
-    baseURL: 'https://mern-ecommerce-backend-iota.vercel.app/api',
+    baseURL: 'http://localhost:4000/api',
     withCredentials: true
 });
 

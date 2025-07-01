@@ -16,7 +16,7 @@ export const useCartContext = create((set, get) => ({
             const {data} = await  axiosInstance.get("/product/list-products");
             set({products: data.products});
         } catch (error) {
-            toast.error(error?.response?.data?.message);  
+            // toast.error(error?.response?.data?.message || "No Product found");  
             console.log(error)          
         }
     },
@@ -32,7 +32,8 @@ export const useCartContext = create((set, get) => ({
             toast.success(data.message)
         } catch (error) {
             set({loading: false})
-            toast.error(error?.response?.data?.message || "Failed to add new Product");  
+            toast.error(error?.response?.data?.message || "Failed to add new Product");
+            console.log(error)  
         }
     },
 
@@ -47,16 +48,17 @@ export const useCartContext = create((set, get) => ({
             toast.success(data.message)
         } catch (error) {
             set({loading: false})
-            toast.error(error?.response?.data?.message || "Failed to add new Category");  
+            toast.error(error?.response?.data?.message || "Failed to add new Category"); 
+            console.log(error) 
         }
     },
 
     fetchAllCategories: async () => {
         try {
-            const {data} = await  axiosInstance.get("/product/list-category");
+            const {data} = await axiosInstance.get("/product/list-category");
             set({categories: data.category});
         } catch (error) {
-            toast.error(error?.response?.data?.message);  
+            // toast.error(error?.response?.data?.message || "No Category found");  
             console.log(error)          
         }
     },

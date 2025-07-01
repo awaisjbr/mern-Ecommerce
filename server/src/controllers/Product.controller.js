@@ -42,24 +42,29 @@ export const addProduct = async (req, res) => {
   const { name, description, price, sizes, category, isFeatured } = req.body;
   try {
     const parsedSizes = typeof sizes === "string" ? JSON.parse(sizes) : sizes;
-    
+    const productCategory = await categoryModel.findOne({ name: category });
+
     const mainImage = req.files.mainImage[0]?.path;
     const uploadMainImage = await cloudinary.uploader.upload(mainImage, {
       folder: `e-commerce/${category}`,
-      resource_type: "auto",
+      resource_type: 'image',
     });
-    fs.unlinkSync(mainImage);
 
-    const subImages = req.files.subImages?.map((file) => file.path) || [];
-    const subImagesArray = [];
-    for (const path of subImages) {
-      const uploaded = await cloudinary.uploader.upload(path, {
-        folder: `e-commerce/${category}/subImages`,
-        resource_type: "auto",
+   const image1 = req.files.image1 && req.files.image1[0];
+   const image2 = req.files.image2 && req.files.image2[0];
+   const image3 = req.files.image3 && req.files.image3[0];
+   const image4 = req.files.image4 && req.files.image4[0];
+   const imageArray = [image1, image2, image3, image4].filter((image) => image);
+
+   const imagesURL = await Promise.all(
+    imageArray.map(async (img) => {
+      let result = await cloudinary.uploader.upload(img.path, {
+        resource_type: "image",
+        folder: `e-commerce/${category}/subImages`
       });
-      fs.unlinkSync(path);
-      subImagesArray.push(uploaded.secure_url);
-    }
+      return result.secure_url;
+    })
+   )
 
     const product = new productModel({
       name,
@@ -67,20 +72,17 @@ export const addProduct = async (req, res) => {
       price,
       isFeatured,
       sizes: parsedSizes,
-      category,
+      category: productCategory._id,
       image: uploadMainImage.secure_url,
-      subImages: subImagesArray,
+      subImages: imagesURL,
     });
     await product.save();
-    res.status(201).json({ message: "Product added successfully.", product });
+    res.status(201).json({ message: "Product added successfully.",product });
   } catch (error) {
     console.error("Add product error:", error);
     return res.status(500).json({ success: false, message: "Add product controller error", error: error.message });
-  } finally {
-    deleteUploadedFiles(req.files); // Ensure temp files are cleaned up on error
   }
 };
-
 export const addCategory = async (req, res) => {
     const {name} = req.body;
     try {
@@ -128,8 +130,8 @@ export const removeProduct = async (req, res) => {
         .status(404)
         .json({ success: false, message: "Product not found" });
     }
-    if (product.images) {
-      const publicId = product.images.split("/").pop().split(".")[0];
+    if (product.image) {
+      const publicId = product.image.split("/").pop().split(".")[0];
       try {
         await cloudinary.uploader.destroy(`products/${publicId}`);
         console.log("deleted image from cloudinary");

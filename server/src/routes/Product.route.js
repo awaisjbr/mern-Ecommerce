@@ -10,6 +10,6 @@ router.get("/list-category", listCategory);
 router.get("/featured-products", getFeaturedProducts);
 router.get("/recomended-products", getRecomendedProducts);
 
-router.post("/add-product", userAuth, adminRoute,upload.fields([{ name: "mainImage", maxCount: 1 }, { name: "subImages", maxCount: 4 }]),addProduct);
+router.post("/add-product", userAuth, adminRoute,upload.fields([{ name: "mainImage", maxCount: 1 }, { name: "image1", maxCount: 1 },{ name: "image2", maxCount: 1 },{ name: "image3", maxCount: 1 },{ name: "image4", maxCount: 1 },]),addProduct);
 router.post("/add-category", userAuth, adminRoute,upload.single("image"),addCategory);
 router.delete("/:id", userAuth, adminRoute, removeProduct);

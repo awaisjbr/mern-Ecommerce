@@ -10,8 +10,8 @@ const AddProduct = () => {
       name: '',
       description: '',
       price: '',
-      image: null,        // now holds a File object
-      subImages: [],      // now holds an array of File objects
+      image: null,      
+      subImages: [],
       category: '',
       sizes: [],
       isFeatured: false,
@@ -88,7 +88,7 @@ const AddProduct = () => {
             ))}
           </select>
           <label className='border outline-none p-2 rounded-lg'><input type="checkbox" name="bestSeller" onChange={handleTextChange} />Best Seller</label>
-          <button type="submit">Add Product</button>
+          <button type="submit" className='bg-green-800 w-fit mx-auto px-3 py-2 rounded-md text-white font-semibold active:bg-green-600'>Add Product</button>
         </form>
       );
 }
