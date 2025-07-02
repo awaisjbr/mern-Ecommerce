@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useCartContext } from '../context/useCartContext';
 import Loading from '../components/Loading';
+import upload_area from "../assets/upload_area.png"
 
 const sizesArray = ["S","M","L","XL","2XL","3XL","4XL"]
 
@@ -9,14 +10,17 @@ const AddProduct = () => {
     const [formData, setFormData] = useState({
       name: '',
       description: '',
-      price: '',
-      image: null,      
-      subImages: [],
+      price: '',      
       category: '',
       sizes: [],
       isFeatured: false,
     });
-    // console.log(formData)
+    const [mainImage, setMainImage] = useState(null);
+    const [image1, setImage1] = useState(null);
+    const [image2, setImage2] = useState(null);
+    const [image3, setImage3] = useState(null);
+    const [image4, setImage4] = useState(null);
+
     const handleTextChange = (e) => {
       const { name, value, type, checked } = e.target;
 
@@ -24,6 +28,11 @@ const AddProduct = () => {
         setFormData(prev => ({
           ...prev,
           sizes: checked ? [...prev.sizes, value] : prev.sizes.filter(size => size !== value),
+        }));
+      }else if(name === "category"){
+        setFormData(prev => ({
+        ...prev,
+        category: e.target.value  // this should be the category _id
         }));
       } else {
         setFormData(prev => ({
@@ -33,18 +42,9 @@ const AddProduct = () => {
       }
     };
 
-    const handleMainImage = (e) => {
-      const file = e.target.files[0];
-      setFormData(prev => ({ ...prev, image: file }));
-    };
-
-    const handleSubImages = (e) => {
-      const files = Array.from(e.target.files);
-      setFormData(prev => ({ ...prev, subImages: files }));
-    };
-
     const handleSubmit = async (e) => {
       e.preventDefault();
+      // console.log(formData, image1, image2, image3, image4, mainImage)
       const dataForm = new FormData();
 
       dataForm.append("name", formData.name);
@@ -53,15 +53,11 @@ const AddProduct = () => {
       dataForm.append("category", formData.category);
       dataForm.append("isFeatured", formData.isFeatured);
       dataForm.append("sizes", JSON.stringify(formData.sizes));
-
-      if (formData.image) {
-        dataForm.append("mainImage", formData.image);
-      }
-
-      formData.subImages.forEach((file) => {
-        dataForm.append("subImages", file);
-      });
-
+      image1 && dataForm.append("image1", image1);
+      image2 && dataForm.append("image2", image2);
+      image3 && dataForm.append("image3", image3);
+      image4 && dataForm.append("image4", image4);
+      mainImage && dataForm.append("mainImage", mainImage)
       await addNewProduct(dataForm);
     };
 
@@ -72,8 +68,13 @@ const AddProduct = () => {
           <input className='border outline-none p-2 rounded-lg' type="text" name="name" placeholder="Name" onChange={handleTextChange} required autoComplete='off'/>
           <textarea className='border outline-none p-2 rounded-lg' name="description" placeholder="Description" onChange={handleTextChange} required />
           <input className='border outline-none p-2 rounded-lg' type="number" name="price" placeholder="Price" onChange={handleTextChange} required min="1" />
-          <input className='border outline-none p-2 rounded-lg' type="file" accept="image/*" onChange={handleMainImage} required />
-          <label className='border outline-none p-2 rounded-lg' ><input type="file" accept="image/*" multiple onChange={handleSubImages} /> <span className='text-red-600'>*</span>Select Max 4 Images</label>
+          <input className='border outline-none p-2 rounded-lg' type="file" accept="image/*" onChange={(e) => setMainImage(e.target.files[0])} required />
+          <div className='flex items-center border outline-none p-2 rounded-lg justify-evenly'>
+            <label htmlFor="image1"><img className='w-20' src={!image1 ? upload_area : URL.createObjectURL(image1)} alt="" /><input type="file" id='image1' onChange={(e) => setImage1(e.target.files[0])} className='hidden' /></label>
+            <label htmlFor="image2"><img className='w-20' src={!image2 ? upload_area : URL.createObjectURL(image2)} alt="" /><input type="file" id='image2' onChange={(e) => setImage2(e.target.files[0])} className='hidden' /></label>
+            <label htmlFor="image3"><img className='w-20' src={!image3 ? upload_area : URL.createObjectURL(image3)} alt="" /><input type="file" id='image3' onChange={(e) => setImage3(e.target.files[0])} className='hidden' /></label>
+            <label htmlFor="image4"><img className='w-20' src={!image4 ? upload_area : URL.createObjectURL(image4)} alt="" /><input type="file" id='image4' onChange={(e) => setImage4(e.target.files[0])} className='hidden' /></label>
+          </div>
           <input className='border outline-none p-2 rounded-lg' type="text" name="subCategory" placeholder="Sub-category" onChange={handleTextChange} required />
           <div className='flex items-center gap-7 border outline-none p-2 rounded-lg'>
           {sizesArray.map((size) => (

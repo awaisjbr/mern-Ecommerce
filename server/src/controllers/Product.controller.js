@@ -41,12 +41,15 @@ export const listProduct = async (req, res) => {
 export const addProduct = async (req, res) => {
   const { name, description, price, sizes, category, isFeatured } = req.body;
   try {
+    const categoryDoc = await categoryModel.findById(category);
     const parsedSizes = typeof sizes === "string" ? JSON.parse(sizes) : sizes;
-    const productCategory = await categoryModel.findOne({ name: category });
 
-    const mainImage = req.files.mainImage[0]?.path;
+    const mainImage = req.files?.mainImage?.[0]?.path;
+    if(!mainImage){
+      return res.status(400).json({ success: false, message: "Main image is required." });
+    }
     const uploadMainImage = await cloudinary.uploader.upload(mainImage, {
-      folder: `e-commerce/${category}`,
+      folder: `e-commerce/${categoryDoc.name}`,
       resource_type: 'image',
     });
 
@@ -60,7 +63,7 @@ export const addProduct = async (req, res) => {
     imageArray.map(async (img) => {
       let result = await cloudinary.uploader.upload(img.path, {
         resource_type: "image",
-        folder: `e-commerce/${category}/subImages`
+        folder: `e-commerce/${categoryDoc.name}/subImages`
       });
       return result.secure_url;
     })
@@ -72,7 +75,7 @@ export const addProduct = async (req, res) => {
       price,
       isFeatured,
       sizes: parsedSizes,
-      category: productCategory._id,
+      category:categoryDoc._id,
       image: uploadMainImage.secure_url,
       subImages: imagesURL,
     });
