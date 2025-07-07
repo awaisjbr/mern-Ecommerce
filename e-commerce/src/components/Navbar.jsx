@@ -5,18 +5,20 @@ import { IoSearch } from "react-icons/io5";
 import { FaRegUser } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 import cartLogo from "../assets/cart.png"
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/useAuthContext";
 import { useCartContext } from "../context/useCartContext";
 
 const Navbar = () => {
   const {authUser, logout} = useAuthContext();
   const {cartItems} = useCartContext();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     const confirm = window.confirm("Are you sure to logout");
     if(confirm){
       await logout();
+      navigate("/");
     }
   }
   return (

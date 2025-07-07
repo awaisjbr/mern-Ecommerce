@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import {router as authRouter} from "./src/routes/Auth.route.js";
 import { router as productRouter } from "./src/routes/Product.route.js";
+import { router as cartRouter } from "./src/routes/Cart.route.js";
 
 dotenv.config();
 const port = process.env.PORT || 5000;
@@ -20,11 +21,12 @@ app.use(express.json({limit: "5mb"}));
 app.use(cookieParser());
 
 
-app.use("/api/auth", authRouter);
-app.use("/api/product", productRouter);
 app.get("/", (req, res) => {
     res.json("Hello Backend")
 })
+app.use("/api/auth", authRouter);
+app.use("/api/product", productRouter);
+app.use("/api/cart", cartRouter)
 
 connectDB()
 .then(() => {

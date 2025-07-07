@@ -20,7 +20,7 @@ const ProductList = ({productList, category}) => {
                         <h1><sup>$</sup>{product.price}<sup>.00</sup></h1>
                     </div>
                     <p className='text-sm text-gray-500 font-semibold'>{product.description}</p>
-                    <div className='text-green-600 flex gap-[2px]'>{new Array(5).fill(<FaStar />)}<sup></sup></div>
+                    <div className='text-green-600 flex gap-[2px]'>{[...Array(5)].map((_,i) => <FaStar key={i} />)}<sup></sup></div>
                     <button className='self-start border rounded-full px-3 py-2 border-black'>Add to Cart</button>
                 </div>
             })}
