@@ -63,7 +63,7 @@ const Navbar = () => {
                 </div>
             </div>
             : <NavLink to={"/login"}><div className="flex items-center gap-2 cursor-pointer font-semibold group relative"><FaRegUser />Account</div></NavLink>}
-            <div className="flex items-center gap-2 cursor-pointer font-semibold relative">{cartItems.length && authUser ? <span className="absolute -top-1 right-8 w-3 h-3 rounded-full flex items-center justify-center bg-green-800 text-[10px] text-white">{cartItems.length}</span> : ""}<FaCartShopping />Cart</div>
+            <div className="flex items-center gap-2 cursor-pointer font-semibold relative">{cartItems.length && authUser ? <span className="absolute -top-1 right-8 w-3 h-3 rounded-full flex items-center justify-center bg-green-800 text-[10px] text-white">{cartItems.length}</span> : ""}<FaCartShopping className={`${cartItems.length && authUser ? "text-green-800" : ""}`}/>Cart</div>
         </div>
     </div>
     </header>

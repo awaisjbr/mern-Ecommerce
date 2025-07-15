@@ -4,7 +4,6 @@ import {Routes, Route, Navigate} from "react-router-dom"
 import Loading from "./components/Loading";
 import {Toaster} from "react-hot-toast"
 import { useAuthContext } from "./context/useAuthContext";
-import axios from "axios";
 import { useCartContext } from "./context/useCartContext";
 
 const Home = lazy(() => import("./pages/Home"));
@@ -15,13 +14,14 @@ const Product = lazy(() => import("./components/Product"));
 
 const App = () => {
   const {authUser, isAuthenticated, isEmailVerified, checkAuth} = useAuthContext();
-  const {fetchAllProducts,fetchAllCategories, products} = useCartContext();
+  const {fetchAllProducts,fetchAllCategories, getUserCart} = useCartContext();
   // console.log(products)
   
   useEffect(() => {
     checkAuth();
-    fetchAllProducts(),
-    fetchAllCategories()
+    fetchAllProducts();
+    fetchAllCategories();
+    getUserCart();
   },[])
 
   return (

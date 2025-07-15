@@ -1,6 +1,7 @@
 import {create} from "zustand";
 import {axiosInstance} from "../utils/utils"
 import toast from "react-hot-toast";
+import { useCartContext } from "./useCartContext";
 
 
 export const useAuthContext = create((set) => ({
@@ -13,10 +14,13 @@ export const useAuthContext = create((set) => ({
 
 
     checkAuth: async () => {
+        const getUserCart = useCartContext.getState().getUserCart;
         try {
             const {data} = await axiosInstance.get("/auth/checkAuth");
             if(data.success){
-                set({authUser: data.user, isAuthenticated: false})
+                set({authUser: data.user, isAuthenticated: false});
+                await getUserCart()
+
             }else {
                 set({ user: null, isAuthenticated: false });
               }
@@ -65,7 +69,7 @@ export const useAuthContext = create((set) => ({
             const {data} = await axiosInstance.post("/auth/login", credentials);
             if(data.success){
                 set({loading: false, authUser: data.user, isAuthenticated: true});
-                toast.success(data.message)
+                toast.success(data.message);
             }else{
                 set({loading: false, authUser: null, isAuthenticated: false});
             }

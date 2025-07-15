@@ -1,6 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { useCartContext } from '../context/useCartContext';
+import { FaStar } from 'react-icons/fa6'
 
 const Product = () => {
   const {products} = useCartContext();
@@ -22,11 +23,15 @@ const Product = () => {
           </div>
         </div>
         <div className='flex-1 flex flex-col'>
-          <div>
-            <h1>{product?.name}</h1>
-            <p>{product?.description}</p>
+          <div className='flex flex-col gap-1'>
+            <h1 className='text-2xl font-bold capitalize mb-2'>{product?.name}</h1>
+            <p className='text-xs font-semibold text-slate-500 lowercase'>{product?.description}</p>
+            <div className='text-green-600 flex items-center text-xs gap-[2px]'>{[...Array(5)].map((_,i) => <FaStar key={i} />)}<span className='text-slate-500 ml-3 font-semibold'>(121)</span></div>
+            <hr className='w-[60%] mt-5'/>
           </div>
-          <hr className='w-[60%]'/>
+          <div>
+            {`$ ${product?.price}`}
+          </div>
         </div>
       </div>
     </div>

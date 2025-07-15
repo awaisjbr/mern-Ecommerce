@@ -63,4 +63,30 @@ export const useCartContext = create((set, get) => ({
         }
     },
 
+    getUserCart: async () => {
+        try {
+            const {data} = await axiosInstance.get("/cart/getCart");
+            if(data.success){
+                set({cartItems: data.cartData})
+            }
+        } catch (error) {
+            console.log(error?.response?.data?.message)
+        }
+    },
+
+    addToCart: async (productId) => {
+        const {getUserCart} = get();
+        try {
+            const {data} = await axiosInstance.post("/cart/addToCart", {productId});
+            if(data.success){
+                toast.success(data.message);
+                await getUserCart();
+            }else{
+                toast.error(data.message)
+            }
+        } catch (error) {
+            toast.error(error?.response?.data?.message || "Error while adding item to cart")
+        }
+    }
+
 }))
