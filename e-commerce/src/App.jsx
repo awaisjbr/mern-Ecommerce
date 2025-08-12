@@ -11,17 +11,17 @@ const Login = lazy(() => import("./pages/Login"));
 const VerifyEmail = lazy(() => import("./pages/VerifyEmail"));
 const AddProduct = lazy(() => import("./pages/AddProduct"));
 const Product = lazy(() => import("./components/Product"));
+const Cart = lazy(() => import("./pages/Cart"));
 
 const App = () => {
   const {authUser, isAuthenticated, isEmailVerified, checkAuth} = useAuthContext();
-  const {fetchAllProducts,fetchAllCategories, getUserCart} = useCartContext();
+  const {fetchAllProducts,fetchAllCategories} = useCartContext();
   // console.log(products)
   
   useEffect(() => {
     checkAuth();
     fetchAllProducts();
     fetchAllCategories();
-    getUserCart();
   },[])
 
   return (
@@ -35,6 +35,7 @@ const App = () => {
           <Route path="/verify-email" element={isEmailVerified ? <Navigate to="/login" /> : <VerifyEmail />}/>
           <Route path="/add-product" element={authUser?.role === "admin" ? <AddProduct/> : <Login />} />
           <Route path="/product/:id" element={<Product />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
       </Suspense>
     </>

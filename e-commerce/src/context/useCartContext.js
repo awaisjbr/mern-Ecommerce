@@ -87,6 +87,25 @@ export const useCartContext = create((set, get) => ({
         } catch (error) {
             toast.error(error?.response?.data?.message || "Error while adding item to cart")
         }
+    },
+
+    clearCart: () => {
+        set({cartItems: [], totalPrice: 0, grandTotal: 0})
+    },
+
+    removeFromCart: async (productId) => {
+        const {getUserCart} = get();
+        try {
+            const {data} = await axiosInstance.post("/cart/removeProduct", {productId});
+            if(data.success){
+                toast.success(data.message);
+                await getUserCart();
+            }else{
+                toast.error(data.message)
+            }
+        } catch (error) {
+            toast.error(error?.response?.data?.message || "Error while removing item from cart")
+        }
     }
 
 }))

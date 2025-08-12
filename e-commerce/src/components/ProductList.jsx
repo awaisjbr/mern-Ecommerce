@@ -10,7 +10,7 @@ const ProductList = ({productList, category}) => {
   return (
     <div className="my-5 lg:my-16 w-[90%] mx-auto">
         <h1 className="font-bigShoulder font-bold text-2xl">Shop Our Top Products</h1>
-        <div className='grid lg:grid-cols-4 gap-y-10 mt-10'>
+        <div className='grid md:grid-cols-2 lg:grid-cols-4 gap-y-10 mt-10'>
             {filterProduct.map((product, index) => {
                 return <div key={index} className='flex flex-col w-72 gap-3'>
                     <div className='h-72 w-72 rounded-lg overflow-hidden' >

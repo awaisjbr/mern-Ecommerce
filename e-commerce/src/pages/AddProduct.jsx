@@ -44,7 +44,6 @@ const AddProduct = () => {
 
     const handleSubmit = async (e) => {
       e.preventDefault();
-      // console.log(formData, image1, image2, image3, image4, mainImage)
       const dataForm = new FormData();
 
       dataForm.append("name", formData.name);
@@ -59,6 +58,11 @@ const AddProduct = () => {
       image4 && dataForm.append("image4", image4);
       mainImage && dataForm.append("mainImage", mainImage)
       await addNewProduct(dataForm);
+      setImage1(null);
+      setImage2(null);
+      setImage3(null);
+      setImage4(null)
+      setFormData({sizes:[],category:""});
     };
 
     if(loading) return <Loading />

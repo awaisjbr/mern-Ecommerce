@@ -64,12 +64,14 @@ export const useAuthContext = create((set) => ({
     },
 
     login: async (credentials) => {
+        const getUserCart = useCartContext.getState().getUserCart;
         set({loading: true});
         try {
             const {data} = await axiosInstance.post("/auth/login", credentials);
             if(data.success){
                 set({loading: false, authUser: data.user, isAuthenticated: true});
                 toast.success(data.message);
+                await getUserCart();
             }else{
                 set({loading: false, authUser: null, isAuthenticated: false});
             }
@@ -81,9 +83,11 @@ export const useAuthContext = create((set) => ({
 
     logout: async () => {
         set({loading: true});
+        const clearCart = useCartContext.getState().clearCart;
         try {
             const {data} = await axiosInstance.post("/auth/logout");
             if(data.success){
+                await clearCart();
                 set({loading: false, authUser: null, isAuthenticated: false});
                 toast.success(data.message)
             }else{

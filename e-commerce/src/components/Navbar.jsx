@@ -5,7 +5,7 @@ import { IoSearch } from "react-icons/io5";
 import { FaRegUser } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 import cartLogo from "../assets/cart.png"
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/useAuthContext";
 import { useCartContext } from "../context/useCartContext";
 
@@ -63,7 +63,7 @@ const Navbar = () => {
                 </div>
             </div>
             : <NavLink to={"/login"}><div className="flex items-center gap-2 cursor-pointer font-semibold group relative"><FaRegUser />Account</div></NavLink>}
-            <div className="flex items-center gap-2 cursor-pointer font-semibold relative">{cartItems.length && authUser ? <span className="absolute -top-1 right-8 w-3 h-3 rounded-full flex items-center justify-center bg-green-800 text-[10px] text-white">{cartItems.length}</span> : ""}<FaCartShopping className={`${cartItems.length && authUser ? "text-green-800" : ""}`}/>Cart</div>
+            <Link to="/cart"><div className="flex items-center gap-2 cursor-pointer font-semibold relative">{cartItems.length && authUser ? <span className="absolute -top-1 right-8 w-3 h-3 rounded-full flex items-center justify-center bg-green-800 text-[10px] text-white">{cartItems.length}</span> : ""}<FaCartShopping className={`${cartItems.length && authUser ? "text-green-800" : ""}`}/>Cart</div></Link>
         </div>
     </div>
     </header>
