@@ -1,15 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
+import {useNavigate} from "react-router-dom"
 import { useCartContext } from "../context/useCartContext";
 import { useAuthContext } from "../context/useAuthContext";
 import { FaArrowRight, FaTag } from "react-icons/fa6";
 import CartItem from "../components/CartItem";
 
 const Cart = () => {
-  const { cartItems } = useCartContext();
+  const { cartItems, setTotalPrice } = useCartContext();
   const { authUser } = useAuthContext();
-  // console.log(authUser)
+  const navigate = useNavigate();
+    
+  const cartSubtotal = () => {
+    return cartItems.reduce((accum, item) => {
+      return  accum + (item.product.price * item.quantity)
+    },0)
+  };
+  const subtotal = cartSubtotal();
+  const discountRate = subtotal < 1000 ? 0 : 10;
+  const discountAmount = (subtotal * discountRate) / 100;
+  const deliveryFee = cartItems.length > 0 ?  (subtotal < 500 ? 10 : 0) : 0;
+  const total = subtotal - discountAmount + deliveryFee;
+
   return (
-    <div className="pt-24 lg:pt-28 bg-[#fefbf7] min-h-screen px-10">
+    <div className="pt-24 lg:pt-28 bg-[#fefbf7] h-screen px-10">
       {authUser ? (
         <div className="px-2 lg:px-10 flex flex-col">
           <div className="text-sm mb-4 text-gray-500">Home &gt; Cart</div>
@@ -32,15 +45,15 @@ const Cart = () => {
                 <div className="flex flex-col gap-3 mt-5">
                   <div className="flex items-center justify-between">
                     <p className="text-gray-500 font-semibold">Subtotal</p>
-                    <p className="font-bold">$565</p>
+                    <p className="font-bold">${subtotal.toFixed(2)}</p>
                   </div>
                   <div className="flex items-center justify-between">
-                    <p className="text-gray-500 font-semibold">Discount(-20%)</p>
-                    <p className="font-bold text-red-500">-$113</p>
+                    <p className="text-gray-500 font-semibold">Discount({discountRate}%)</p>
+                    <p className="font-bold text-red-500">-${discountAmount.toFixed(2)}</p>
                   </div>
                   <div className="flex items-center justify-between">
                     <p className="text-gray-500 font-semibold">Delivery Fee</p>
-                    <p className="font-bold">$15</p>
+                    <p className="font-bold">${deliveryFee.toFixed(2)}</p>
                   </div>
                 </div>
               </div>
@@ -48,20 +61,20 @@ const Cart = () => {
               <div className="flex flex-col gap-6">
                 <div className="flex items-center justify-between">
                     <p className="font-semibold text-xl">Total</p>
-                    <p className="font-bold text-xl">$467</p>
+                    <p className="font-bold text-xl">${total.toFixed(2)}</p>
                 </div>
                 <div className="flex items-center gap-1 md:gap-3">
                   <div className="relative flex w-full"><FaTag className="absolute left-5 top-[14px] text-gray-500" /><input className="flex-1 py-2 rounded-full ps-10 border-2 outline-none" type="text" placeholder="Add promo code" /></div>
                   <button className="bg-black text-white py-2 px-5 md:px-10 rounded-full">Apply</button>
                 </div>
-                <div className="flex items-center bg-black text-white w-2/3 py-2 rounded-full justify-center gap-3 mx-auto cursor-pointer">Go to Checkout <FaArrowRight /></div>
+                <div className="flex items-center bg-black text-white w-2/3 py-2 rounded-full justify-center gap-3 mx-auto cursor-pointer hover:bg-gray-800 active:bg-black" onClick={() => cartItems.length > 0 ? navigate("/place-order") : alert("No item in cart for checkout")}>Go to Checkout <FaArrowRight /></div>
               </div>
             </div>
           </div>
 
         </div>
       ) : (
-        <div className="w-full h-full flex items-center justify-center text-2xl font-bold">Please login to your account</div>
+        <div className="flex items-center bg-red-300 h-full justify-center text-2xl font-bold">Please login to your account</div>
       )}
     </div>
   );

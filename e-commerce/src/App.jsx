@@ -12,6 +12,7 @@ const VerifyEmail = lazy(() => import("./pages/VerifyEmail"));
 const AddProduct = lazy(() => import("./pages/AddProduct"));
 const Product = lazy(() => import("./components/Product"));
 const Cart = lazy(() => import("./pages/Cart"));
+const OrderPage = lazy(() => import("./pages/OrderPage"));
 
 const App = () => {
   const {authUser, isAuthenticated, isEmailVerified, checkAuth} = useAuthContext();
@@ -36,6 +37,7 @@ const App = () => {
           <Route path="/add-product" element={authUser?.role === "admin" ? <AddProduct/> : <Login />} />
           <Route path="/product/:id" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/place-order" element={<OrderPage />} />
         </Routes>
       </Suspense>
     </>

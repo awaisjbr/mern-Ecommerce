@@ -11,6 +11,8 @@ export const useCartContext = create((set, get) => ({
     categories: [],
     loading: false,
 
+    setTotalPrice: (value) => set({totalPrice: value}), 
+
     fetchAllProducts: async () => {
         try {
             const {data} = await  axiosInstance.get("/product/list-products");
@@ -105,6 +107,38 @@ export const useCartContext = create((set, get) => ({
             }
         } catch (error) {
             toast.error(error?.response?.data?.message || "Error while removing item from cart")
+        }
+    },
+
+    increaseProductQuantity: async (productId) => {
+        const {getUserCart} = get();
+        try {
+            const {data} = await axiosInstance.post("/cart/updateCart", {productId});
+            if(data.success){
+                toast.success(data.message);
+                await getUserCart();
+            }else{
+                toast.error(data.message)
+            }
+        } catch (error) {
+            toast.error(error?.response?.data?.message || "Error while updating product quantity from cart")
+
+        }
+    },
+
+    decreaseProductQuantity: async (productId) => {
+        const {getUserCart} = get();
+        try {
+            const {data} = await axiosInstance.post("/cart/decreaseProductQuantity", {productId});
+            if(data.success){
+                toast.success(data.message);
+                await getUserCart();
+            }else{
+                toast.error(data.message)
+            }
+        } catch (error) {
+            toast.error(error?.response?.data?.message || "Error while updating product quantity decrease from cart")
+
         }
     }
 
