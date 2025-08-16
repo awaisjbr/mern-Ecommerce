@@ -17,7 +17,7 @@ const OrderPage = lazy(() => import("./pages/OrderPage"));
 const App = () => {
   const {authUser, isAuthenticated, isEmailVerified, checkAuth} = useAuthContext();
   const {fetchAllProducts,fetchAllCategories} = useCartContext();
-  // console.log(products)
+  // console.log(cartItems)
   
   useEffect(() => {
     checkAuth();

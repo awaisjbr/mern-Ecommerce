@@ -41,16 +41,20 @@ const userSchema = new mongoose.Schema({
         default: "customer"
     },
     cartItems: [
-        {quantity: {
-            type: Number,
-            default: 0
-        },
-        product: {
+        { product: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Product"
+            },
+            quantity: {
+                type: Number,
+                default: 0
+            },
+            size: {
+                type: String,
+                required: true
+            }
         }
-        }
-    ]
+    ],
 
 },{timestamps:true});
 

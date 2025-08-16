@@ -1,10 +1,10 @@
 import React from 'react'
 import { FaStar } from 'react-icons/fa6'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useCartContext } from '../context/useCartContext'
 
 const ProductList = ({productList, category}) => {
-    const {addToCart} = useCartContext();
+    const navigate = useNavigate()
     const filterProduct = category === "All" ? productList : productList.filter((product) => product.category.name === category)
     // console.log(filterProduct)
   return (
@@ -22,7 +22,7 @@ const ProductList = ({productList, category}) => {
                     </div>
                     <p className='text-sm text-gray-500 font-semibold'>{product.description}</p>
                     <div className='text-green-600 flex gap-[2px]'>{[...Array(5)].map((_,i) => <FaStar key={i} />)}<sup></sup></div>
-                    <button className='self-start border rounded-full px-3 py-2 border-black' onClick={() => addToCart(product._id)}>Add to Cart</button>
+                    <button className='self-start border rounded-full px-3 py-2 border-black' onClick={() => navigate(`/product/${product._id}`)}>Add to Cart</button>
                 </div>
             })}
         </div>

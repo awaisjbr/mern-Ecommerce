@@ -34,7 +34,7 @@ const Cart = () => {
             <div className="border-2 border-grey-200 p-2 md:p-5 pb-0 mb-0 rounded-xl lg:w-[60%] ">
               {cartItems.length > 0 ? (
                 <div className="flex flex-col gap-5">
-                  {cartItems.map((item,i) => <CartItem key={i} item={item}/>)}
+                  {cartItems.map((item,i) => <CartItem key={i} item={item} size={item.size}/>)}
                 </div>
               ):(<div className="text-xl font-semibold flex items-center justify-center h-full">Your cart is empty</div>)}
             </div>

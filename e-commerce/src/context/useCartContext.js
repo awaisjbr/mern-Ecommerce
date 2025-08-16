@@ -76,10 +76,10 @@ export const useCartContext = create((set, get) => ({
         }
     },
 
-    addToCart: async (productId) => {
+    addToCart: async (productId, size) => {
         const {getUserCart} = get();
         try {
-            const {data} = await axiosInstance.post("/cart/addToCart", {productId});
+            const {data} = await axiosInstance.post("/cart/addToCart", {productId, size});
             if(data.success){
                 toast.success(data.message);
                 await getUserCart();
@@ -113,7 +113,7 @@ export const useCartContext = create((set, get) => ({
     increaseProductQuantity: async (productId) => {
         const {getUserCart} = get();
         try {
-            const {data} = await axiosInstance.post("/cart/updateCart", {productId});
+            const {data} = await axiosInstance.post("/cart/increaseProductQuantity", {productId});
             if(data.success){
                 toast.success(data.message);
                 await getUserCart();
