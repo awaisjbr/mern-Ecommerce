@@ -62,7 +62,7 @@ const Navbar = () => {
                     </ul>
                 </div>
             </div>
-            : <NavLink to={"/login"}><div className="flex items-center gap-2 cursor-pointer font-semibold group relative"><FaRegUser />Account1</div></NavLink>}
+            : <NavLink to={"/login"}><div className="flex items-center gap-2 cursor-pointer font-semibold group relative"><FaRegUser />Account</div></NavLink>}
             <Link to="/cart"><div className="flex items-center gap-2 cursor-pointer font-semibold relative">{cartItems.length && authUser ? <span className="absolute -top-1 right-8 w-3 h-3 rounded-full flex items-center justify-center bg-green-800 text-[10px] text-white">{cartItems.length}</span> : ""}<FaCartShopping className={`${cartItems.length && authUser ? "text-green-800" : ""}`}/>Cart</div></Link>
         </div>
     </div>
