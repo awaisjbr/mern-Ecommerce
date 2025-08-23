@@ -5,6 +5,7 @@ import Loading from "./components/Loading";
 import {Toaster} from "react-hot-toast"
 import { useAuthContext } from "./context/useAuthContext";
 import { useCartContext } from "./context/useCartContext";
+import { useOrderContext } from "./context/useOrderContext";
 
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
@@ -13,16 +14,22 @@ const AddProduct = lazy(() => import("./pages/AddProduct"));
 const Product = lazy(() => import("./components/Product"));
 const Cart = lazy(() => import("./pages/Cart"));
 const OrderPage = lazy(() => import("./pages/OrderPage"));
+const AllOrders = lazy(() => import("./pages/AllOrders"));
 
 const App = () => {
   const {authUser, isAuthenticated, isEmailVerified, checkAuth} = useAuthContext();
   const {fetchAllProducts,fetchAllCategories} = useCartContext();
-  // console.log(cartItems)
+  const {listOrders, orderItems} = useOrderContext();
+  // orderItems.map((order) => {
+  //   console.log(order.items)
+  // })
+  console.log(orderItems)
   
   useEffect(() => {
     checkAuth();
     fetchAllProducts();
     fetchAllCategories();
+    listOrders();
   },[])
 
   return (
@@ -38,6 +45,7 @@ const App = () => {
           <Route path="/product/:id" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/place-order" element={<OrderPage />} />
+          <Route path="/my-orders" element={<AllOrders />} />
         </Routes>
       </Suspense>
     </>

@@ -4,6 +4,7 @@ import { useCartContext } from "../context/useCartContext";
 import { useAuthContext } from "../context/useAuthContext";
 import { FaArrowRight, FaTag } from "react-icons/fa6";
 import CartItem from "../components/CartItem";
+import toast from "react-hot-toast";
 
 const Cart = () => {
   const { cartItems, setTotalPrice } = useCartContext();
@@ -21,11 +22,20 @@ const Cart = () => {
   const deliveryFee = cartItems.length > 0 ?  (subtotal < 500 ? 10 : 0) : 0;
   const total = subtotal - discountAmount + deliveryFee;
 
+  const handleCheckOut = () => {
+    if(cartItems.length > 0){
+      setTotalPrice(total);
+      navigate("/place-order")
+    }else{
+      toast.error("No item in cart for checkout")
+    }
+  }
+
   return (
-    <div className="pt-24 lg:pt-28 bg-[#fefbf7] h-screen px-10">
+    <div className="pt-24 lg:pt-28 bg-[#fefbf7] h-screen">
       {authUser ? (
         <div className="px-2 lg:px-10 flex flex-col">
-          <div className="text-sm mb-4 text-gray-500">Home &gt; Cart</div>
+          <div className="text-sm mb-4 text-gray-500"><span className="cursor-pointer hover:text-blue-400" onClick={() => navigate("/")}>Home &gt;</span> Cart</div>
           <h1 className="text-3xl font-bold mb-6">Your Cart</h1>
 
           {/* Cart Container */}
@@ -67,14 +77,14 @@ const Cart = () => {
                   <div className="relative flex w-full"><FaTag className="absolute left-5 top-[14px] text-gray-500" /><input className="flex-1 py-2 rounded-full ps-10 border-2 outline-none" type="text" placeholder="Add promo code" /></div>
                   <button className="bg-black text-white py-2 px-5 md:px-10 rounded-full">Apply</button>
                 </div>
-                <div className="flex items-center bg-black text-white w-2/3 py-2 rounded-full justify-center gap-3 mx-auto cursor-pointer hover:bg-gray-800 active:bg-black" onClick={() => cartItems.length > 0 ? navigate("/place-order") : alert("No item in cart for checkout")}>Go to Checkout <FaArrowRight /></div>
+                <div className="flex items-center bg-black text-white w-2/3 py-2 rounded-full justify-center gap-3 mx-auto cursor-pointer hover:bg-gray-800 active:bg-black" onClick={handleCheckOut}>Go to Checkout <FaArrowRight /></div>
               </div>
             </div>
           </div>
 
         </div>
       ) : (
-        <div className="flex items-center bg-red-300 h-full justify-center text-2xl font-bold">Please login to your account</div>
+        <div className="flex items-center bg-green-50 h-full justify-center text-2xl font-bold">Please login to your account</div>
       )}
     </div>
   );

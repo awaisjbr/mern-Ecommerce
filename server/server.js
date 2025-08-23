@@ -6,6 +6,7 @@ import cors from "cors";
 import {router as authRouter} from "./src/routes/Auth.route.js";
 import { router as productRouter } from "./src/routes/Product.route.js";
 import { router as cartRouter } from "./src/routes/Cart.route.js";
+import {router as orderRouter} from "./src/routes/Order.route.js"
 
 dotenv.config();
 const port = process.env.PORT || 5000;
@@ -26,7 +27,8 @@ app.get("/", (req, res) => {
 })
 app.use("/api/auth", authRouter);
 app.use("/api/product", productRouter);
-app.use("/api/cart", cartRouter)
+app.use("/api/cart", cartRouter);
+app.use("/api/order", orderRouter);
 
 connectDB()
 .then(() => {

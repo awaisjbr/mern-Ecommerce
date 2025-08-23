@@ -1,4 +1,3 @@
-import { json } from "express";
 import { userModel } from "../models/user.model.js";
 
 export const getUserCart = async (req, res) => {

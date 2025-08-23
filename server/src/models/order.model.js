@@ -4,13 +4,34 @@ const orderSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        required: true,
+        require: true,
 
     },
-    address: {
-        type: String,
-        required: true
-    }
-});
+    items: [
 
-export const orderModel = mongoose.models.order || mongoose.model("Order", orderSchema);
+    ],
+    address: {
+        type: Object,
+        require: true,
+    },
+    amount: {
+        type: Number,
+        require: true,
+    },
+    status: {
+        type: String,
+        require: true,
+        default: "Order Placed"
+    },
+    paymentMethod: {
+        type: String,
+        require: true,
+    },
+    payment: {
+        type: Boolean,
+        require: true,
+        default: false
+    }
+},{timestamps: true});
+
+export const orderModel = mongoose.model("Order", orderSchema);

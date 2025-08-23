@@ -15,7 +15,7 @@ const CartItem = ({item, size}) => {
           <Link to={`/product/${_id}`}><img className="h-20 lg:h-24 rounded-sm cursor-pointer" src={item.product.image} alt={name} /></Link>
           <div className="flex-1">
             <h2 className="text-sm md:text-lg font-semibold">{name}</h2>
-            <p className="text-xs md:text-sm font-semibold">Size: <span className=" text-black  bg-gray-300 px-2">{size}</span></p>
+            <p className="text-xs md:text-sm font-semibold flex items-center gap-3">Size: <span className=" text-black border-black border px-2">{size}</span></p>
             {/* <p className="text-xs md:text-sm font-semibold">Color: <span className="font-normal text-gray-600">White</span></p> */}
             <p className="text-sm md:text-xl font-bold mt-3">$-{price}</p>
           </div>
