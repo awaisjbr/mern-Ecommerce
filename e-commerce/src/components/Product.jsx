@@ -11,7 +11,7 @@ const Product = () => {
   const {id} = useParams();
   const product = products?.find((item) => item._id === id);
   const [selectedSize, setSelectedSize] = useState("");
-
+  
   const handleAddToCart = async (id, size) => {
     if(authUser){
       if(selectedSize){

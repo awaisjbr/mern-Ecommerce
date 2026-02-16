@@ -36,7 +36,7 @@ export const placeOrder = async (req, res) => {
 export const listOrders = async (req, res) => {
    const {loginId} = req.body;
     try {
-        const orders = await orderModel.find({ userId: loginId }).populate("items.product", "product");
+        const orders = await orderModel.find({ userId: loginId }).populate("items.product");
 
         res.status(200).json({success: true, orders})
     } catch (error) {

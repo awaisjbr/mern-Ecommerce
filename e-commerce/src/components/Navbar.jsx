@@ -23,12 +23,12 @@ const Navbar = () => {
   }
   return (
     <header className="fixed w-full top-0 left-0 z-20">
-      <div className="bg-green-800 text-white flex items-center justify-between px-10 py-2 font-poppins text-sm">
-        <div className="flex items-center gap-3"><FaPhone /><a href="tel:+971581212786">+971 58 1212 786</a></div>
+      <div className="bg-green-800 text-white flex items-center justify-between px-5 md:px-10 py-2 font-poppins text-sm">
+        <div className="flex items-center gap-3"><FaPhone /><a href="tel:+971554308646">+971 55 430 8646</a></div>
           <div className="text-sm hidden md:block">
             <p>Get 50% off on Selected Items &nbsp; &nbsp; | &nbsp; &nbsp; Shop Now</p>
           </div>
-          <div className="flex items-center gap-10">
+          <div className="flex items-center gap-5 lg:gap-10">
             <p className="flex items-center gap-2 cursor-pointer">Eng <FaAngleDown /></p>
             <p className="flex items-center gap-2 cursor-pointer">Location <FaAngleDown /></p>
           </div>
@@ -42,7 +42,7 @@ const Navbar = () => {
                 <li className="flex items-center gap-3 cursor-pointer">Categories <FaAngleDown /></li>
                 <li className="cursor-pointer">{authUser?.role === "admin" ? "Dashboard" : "Deals"}</li>
                 <li className="cursor-pointer">{authUser?.role === "admin" ? "" : "New Offers"}</li>
-                {authUser?.role === "admin" ? <NavLink to={"/add-product"}><li className="cursor-pointer">Add Product</li></NavLink> : <li className="cursor-pointer">Delivery</li>}
+                {authUser?.role === "admin" ? <NavLink to={"/add-product"}><li className="cursor-pointer">Add Product</li></NavLink> : <NavLink to={"/my-orders"}><li className="cursor-pointer">Orders</li></NavLink>}
                 
             </ul>
         </nav>

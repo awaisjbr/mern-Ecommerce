@@ -13,7 +13,7 @@ export const useOrderContext = create((set, get) => ({
         try {
             const {data} = await axiosInstance.post("/order/place",orderData);
             if(data.success){
-                toast.success(data.message);3
+                toast.success(data.message);
                 await getUserCart();
             }else{
                 toast.error(data.message)

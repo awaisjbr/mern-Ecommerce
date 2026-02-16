@@ -5,7 +5,6 @@ import Loading from "./components/Loading";
 import {Toaster} from "react-hot-toast"
 import { useAuthContext } from "./context/useAuthContext";
 import { useCartContext } from "./context/useCartContext";
-import { useOrderContext } from "./context/useOrderContext";
 
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
@@ -18,18 +17,12 @@ const AllOrders = lazy(() => import("./pages/AllOrders"));
 
 const App = () => {
   const {authUser, isAuthenticated, isEmailVerified, checkAuth} = useAuthContext();
-  const {fetchAllProducts,fetchAllCategories} = useCartContext();
-  const {listOrders, orderItems} = useOrderContext();
-  // orderItems.map((order) => {
-  //   console.log(order.items)
-  // })
-  console.log(orderItems)
+  const {fetchAllProducts,fetchAllCategories, products} = useCartContext();
   
   useEffect(() => {
     checkAuth();
     fetchAllProducts();
     fetchAllCategories();
-    listOrders();
   },[])
 
   return (
