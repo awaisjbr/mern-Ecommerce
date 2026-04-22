@@ -14,7 +14,7 @@ const ProductList = ({productList, category}) => {
             {filterProduct.map((product, index) => {
                 return <div key={index} className='flex flex-col w-72 gap-3'>
                     <div className='h-72 w-72 rounded-lg overflow-hidden' >
-                        <NavLink to={`/product/${product._id}`}><img src={product.image} alt="" className='hover:scale-110 transition-all duration-300 ease-linear cursor-pointer' /></NavLink>
+                        <NavLink to={`/product/${product._id}`}><img src={product.mainImage} alt="" className='hover:scale-110 transition-all duration-300 ease-linear cursor-pointer' /></NavLink>
                     </div>
                     <div className='flex items-center justify-between font-bold'>
                         <h1>{product.name}</h1>

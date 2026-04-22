@@ -9,12 +9,14 @@ lerna-debug.log*
 
 node_modules
 
+/e-commerce/
+/client/.next/
+
 
 .env
 dist
 dist-ssr
 *.local
-/client
 
 
 # Editor directories and files

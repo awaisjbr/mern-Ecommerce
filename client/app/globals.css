@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.font1 {
+  font-family: var(--font-playfair);
+}
+.font2 {
+  font-family: var(--font-poppins);
+}
