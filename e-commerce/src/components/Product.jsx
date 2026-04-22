@@ -33,7 +33,7 @@ const Product = () => {
       <div className='flex justify-between flex-col lg:flex-row gap-3'>
         <div className='flex-1 flex-col lg:flex-row flex items-center justify-center gap-5'>
           <div className='flex lg:flex-col items-center justify-center gap-2'>
-            {product?.subImages?.map((image,index) => {
+            {product?.images?.map((image,index) => {
               return <img key={index} src={image} className='w-16 md:w-20 lg:min-w-24 cursor-pointer rounded' alt="" />
             })}
           </div>
